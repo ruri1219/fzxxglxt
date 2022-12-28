@@ -4,6 +4,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Vector;
 
@@ -41,12 +42,27 @@ public class fzjbxxComponent extends Box {
         btnPanel.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         btnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
+        JButton dcBtn=new JButton("导出");
         JButton addBtn = new JButton("添加");
         JButton selectBtn = new JButton("查询");
         JButton updateBtn = new JButton("修改");
         JButton deleteBtn = new JButton("删除");
         JButton orderBtn=new JButton("排序");
 
+        dcBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new daochu().fzxxdaochu(jf);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -136,6 +152,7 @@ public class fzjbxxComponent extends Box {
                 }).setVisible(true);
             }
         });
+        btnPanel.add(dcBtn);
         btnPanel.add(addBtn);
         btnPanel.add(selectBtn);
         btnPanel.add(updateBtn);
