@@ -57,52 +57,54 @@ public class RegisterInterface {
                 String username=uField.getText().trim();
                 String password=pField.getText().trim();
                 String phone=tField.getText().trim();
-                int count=0;
-                String sql="select * from zh where phone=?";
-                try {
-                    PreparedStatement statement=setConnection.getConnection().prepareStatement(sql);
-                    statement.setString(1,phone);
-                    ResultSet rs= statement.executeQuery();
-                    //查询手机号是否被注册过
-                    if (!rs.next()){
-                        String sql1="select * from zh where username=?";
-                        PreparedStatement statement1=setConnection.getConnection().prepareStatement(sql1);
-                        statement1.setString(1,username);
-                        ResultSet rs1=statement1.executeQuery();
-                        //查询用户名是否被注册过
-                        if (!rs1.next()){
-                            try {
-                                count=account.addAccount(username,password,phone);
-                            } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
-                            } catch (ClassNotFoundException ex) {
-                                throw new RuntimeException(ex);
-                            }
-                            if(count>0){
-                                JOptionPane.showMessageDialog(jf,"注册成功！");
+                if(!username.equals("")&&!password.equals("")&&!phone.equals("")){
+                    int count=0;
+                    String sql="select * from zh where phone=?";
+                    try {
+                        PreparedStatement statement=setConnection.getConnection().prepareStatement(sql);
+                        statement.setString(1,phone);
+                        ResultSet rs= statement.executeQuery();
+                        //查询手机号是否被注册过
+                        if (!rs.next()){
+                            String sql1="select * from zh where username=?";
+                            PreparedStatement statement1=setConnection.getConnection().prepareStatement(sql1);
+                            statement1.setString(1,username);
+                            ResultSet rs1=statement1.executeQuery();
+                            //查询用户名是否被注册过
+                            if (!rs1.next()){
                                 try {
-                                    new MainInterface().init();//跳转到登录界面
-                                    jf.dispose();
-                                } catch (IOException ex) {
+                                    count=account.addAccount(username,password,phone);
+                                } catch (SQLException ex) {
+                                    throw new RuntimeException(ex);
+                                } catch (ClassNotFoundException ex) {
                                     throw new RuntimeException(ex);
                                 }
+                                if(count>0){
+                                    JOptionPane.showMessageDialog(jf,"注册成功！");
+                                    try {
+                                        new MainInterface().init();//跳转到登录界面
+                                        jf.dispose();
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(jf,"注册失败，该用户名已被注册！");
+                                uField.setText("");
+                                pField.setText("");
+                                tField.setText("");
                             }
                         }else{
-                            JOptionPane.showMessageDialog(jf,"注册失败，该用户名已被注册！");
+                            JOptionPane.showMessageDialog(jf,"注册失败，该手机号已被注册！");
                             uField.setText("");
                             pField.setText("");
                             tField.setText("");
                         }
-                    }else{
-                        JOptionPane.showMessageDialog(jf,"注册失败，该手机号已被注册！");
-                        uField.setText("");
-                        pField.setText("");
-                        tField.setText("");
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
                     }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
                 }
             }
         });
