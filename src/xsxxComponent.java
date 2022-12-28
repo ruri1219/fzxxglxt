@@ -4,6 +4,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Vector;
 
@@ -41,9 +42,24 @@ public class xsxxComponent extends Box {
         btnPanel.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         btnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
+        JButton dcBtn=new JButton("导出");
         JButton addBtn = new JButton("添加");
         JButton selectBtn = new JButton("查询");
 
+        dcBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new daochu().xsxxdaochu(jf);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,10 +96,9 @@ public class xsxxComponent extends Box {
                 }).setVisible(true);
             }
         });
+        btnPanel.add(dcBtn);
         btnPanel.add(addBtn);
         btnPanel.add(selectBtn);
-//        btnPanel.add(updateBtn);
-//        btnPanel.add(deleteBtn);
         this.add(btnPanel);
         //组装表格
         String[] ts = {"服装编号", "销售单号", "客户购买数量", "支付方式", "客户享受折扣", "应收款", "实收款"};

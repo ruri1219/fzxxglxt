@@ -4,6 +4,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Vector;
 
@@ -41,11 +42,24 @@ public class cgxxComponent extends Box {
         btnPanel.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         btnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
+        JButton dcBtn=new JButton("导出");
         JButton addBtn = new JButton("添加");
         JButton selectBtn = new JButton("查询");
-        /*JButton updateBtn = new JButton("修改");
-        JButton deleteBtn = new JButton("删除");*/
 
+        dcBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new daochu().cgxxdaochu(jf);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,10 +96,9 @@ public class cgxxComponent extends Box {
                 }).setVisible(true);
             }
         });
+        btnPanel.add(dcBtn);
         btnPanel.add(addBtn);
         btnPanel.add(selectBtn);
-        /*btnPanel.add(updateBtn);
-        btnPanel.add(deleteBtn);*/
         this.add(btnPanel);
         //组装表格
         String[] ts = {"采购单号", "供应商编号", "服装编号", "采购数量", "采购单价", "总花费"};
