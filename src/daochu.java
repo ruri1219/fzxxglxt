@@ -53,6 +53,15 @@ public class daochu {
         bw.close();
         JOptionPane.showMessageDialog(jf,"导出成功");
     }
+
+    /**
+     * 导出销售信息
+     *
+     * @param jf 界面
+     * @throws IOException            ioexception
+     * @throws SQLException           sqlexception异常
+     * @throws ClassNotFoundException 类没有发现异常
+     */
     public void xsxxdaochu(JFrame jf) throws IOException, SQLException, ClassNotFoundException {
         this.jf=jf;
         BufferedWriter bw=new BufferedWriter(new FileWriter("daochu/xsxx.txt"));
@@ -82,6 +91,15 @@ public class daochu {
         bw.close();
         JOptionPane.showMessageDialog(jf,"导出成功");
     }
+
+    /**
+     * 导出采购信息
+     *
+     * @param jf 界面
+     * @throws IOException            ioexception
+     * @throws SQLException           sqlexception异常
+     * @throws ClassNotFoundException 类没有发现异常
+     */
     public void cgxxdaochu(JFrame jf) throws IOException, SQLException, ClassNotFoundException {
         this.jf=jf;
         BufferedWriter bw=new BufferedWriter(new FileWriter("daochu/cgxx.txt"));
@@ -151,6 +169,14 @@ public class daochu {
         rs.close();
         return data;
     }
+
+    /**
+     * 获取销售信息
+     *
+     * @return {@link Vector}<{@link Vector}>
+     * @throws SQLException           sqlexception异常
+     * @throws ClassNotFoundException 类没有发现异常
+     */
     public Vector<Vector> getInformationInterface3() throws SQLException, ClassNotFoundException {
         String sql = "select * from xiaoshou ";
         Vector<Vector> data = new Vector<>();
@@ -179,6 +205,14 @@ public class daochu {
         rs.close();
         return data;
     }
+
+    /**
+     * 获取采购信息
+     *
+     * @return {@link Vector}<{@link Vector}>
+     * @throws SQLException           sqlexception异常
+     * @throws ClassNotFoundException 类没有发现异常
+     */
     public Vector<Vector> getInformationInterface4() throws SQLException, ClassNotFoundException {
         String sql = "select * from purchase ";
         Vector<Vector> data = new Vector<>();
