@@ -105,7 +105,8 @@ public class RegisterInterface {
                     } catch (ClassNotFoundException ex) {
                         throw new RuntimeException(ex);
                     }
-                }
+                }else
+                    JOptionPane.showMessageDialog(jf,"注册失败，请按要求输入数据");
             }
         });
         backBtn.addActionListener(new ActionListener() {
