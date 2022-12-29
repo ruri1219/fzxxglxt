@@ -107,7 +107,7 @@ public class addcgDialog extends JDialog {
                             if(rs1.next()){
                                 price0=rs1.getDouble("inprice");
                                 money0=price0*count0;
-                                //将售价修改为进价的1.1倍
+                                //修改实付款
                                 String sql1="update purchase set price=?,money=round(?,0) where cgdh=?";
                                 PreparedStatement stmt=setConnection.getConnection().prepareStatement(sql1);
                                 stmt.setDouble(1,price0);
